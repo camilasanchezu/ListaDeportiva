@@ -12,7 +12,7 @@ export default NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET!,
   callbacks: {
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account }) {
       // si es el primer login, copiamos los roles del id_token o access_token
       if (account?.access_token) {
         const decoded = JSON.parse(
