@@ -6,8 +6,9 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
-      roles?: string[]; // <-- Aquí declaras los roles
     };
+    roles?: string[]; // <-- Roles are on session level
+    accessToken?: string;
   }
 }
 

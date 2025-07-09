@@ -1,17 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Lista Deportiva - Sports App with Keycloak Authentication
+
+This is a [Next.js](https://nextjs.org) project with Keycloak authentication and admin functionality for viewing encrypted reservations.
+
+## Features
+
+- **Authentication**: Keycloak integration with NextAuth.js
+- **Sports Display**: Shows most played sports globally
+- **Admin Panel**: Secure access to encrypted reservation data
+- **Azure Key Vault**: Decryption of reservation data using Azure Key Vault
+
+## Admin Functionality
+
+Users with the `admin` role can view a list of reservations fetched from an encrypted API endpoint. The data is decrypted using Azure Key Vault with RSA-OAEP and AES-GCM encryption.
+
+## Environment Setup
+
+Copy `.env.example` to `.env.local` and configure the following variables:
+
+```bash
+# NextAuth Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-here
+
+# Keycloak Configuration
+KEYCLOAK_CLIENT_ID=your-keycloak-client-id
+KEYCLOAK_CLIENT_SECRET=your-keycloak-client-secret
+KEYCLOAK_ISSUER=https://your-keycloak-domain/realms/your-realm
+
+# Azure Key Vault Configuration
+AZURE_KEY_VAULT_URL=https://your-keyvault-name.vault.azure.net/
+AZURE_KEY_NAME=your-rsa-key-name
+```
+
+For Azure authentication, you can use:
+1. Azure CLI: Run `az login`
+2. Environment variables for service principal
+3. Managed Identity (when deployed to Azure)
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+```bash
+npm install
+```
 
+2. Configure your environment variables in `.env.local`
+
+3. Run the development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
