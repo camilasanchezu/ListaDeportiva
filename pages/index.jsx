@@ -165,6 +165,8 @@ export default function Home() {
             }}
             onMouseOver={(e) => e.target.style.backgroundColor = "#b71c1c"}
             onMouseOut={(e) => e.target.style.backgroundColor = "#d32f2f"}
+            onFocus={(e) => e.target.style.backgroundColor = "#b71c1c"}
+            onBlur={(e) => e.target.style.backgroundColor = "#d32f2f"}
           >
             🚪 Cerrar sesión
           </button>
@@ -229,6 +231,16 @@ export default function Home() {
             e.target.style.boxShadow = "0 4px 12px rgba(25, 118, 210, 0.4)";
           }}
           onMouseOut={(e) => {
+            e.target.style.backgroundColor = "#1976d2";
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "none";
+          }}
+          onFocus={(e) => {
+            e.target.style.backgroundColor = "#1565c0";
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 4px 12px rgba(25, 118, 210, 0.4)";
+          }}
+          onBlur={(e) => {
             e.target.style.backgroundColor = "#1976d2";
             e.target.style.transform = "translateY(0)";
             e.target.style.boxShadow = "none";
