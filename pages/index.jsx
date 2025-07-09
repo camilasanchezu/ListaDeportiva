@@ -4,15 +4,12 @@ import { mostPlayedSports } from "../data/mostPlayedSports";
 export default function Home() {
   const { data: session, status } = useSession();
 
-  console.log("Sesión actual:", session); 
-  console.log("Roles del usuario:", session?.user?.roles); 
-
   if (status === "loading") {
     return <p>Cargando sesión...</p>;
   }
 
   if (session) {
-    const isAdmin = session.user?.roles?.includes("Admin");
+    const isAdmin = session?.roles?.includes("admin");
 
     return (
       <div style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>

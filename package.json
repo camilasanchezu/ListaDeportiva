@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/identity": "^4.10.2",
+    "@azure/keyvault-keys": "^4.10.0",
+    "jwt-decode": "^4.0.0",
     "next": "15.3.2",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
