@@ -3,9 +3,11 @@ import { getServerSession } from 'next-auth';
 import { DefaultAzureCredential } from '@azure/identity';
 import { KeyClient, CryptographyClient } from '@azure/keyvault-keys';
 import crypto from 'crypto';
-import NextAuth from 'next-auth';
 import KeycloakProvider from 'next-auth/providers/keycloak';
 import { jwtDecode } from 'jwt-decode';
+import type { JWT } from 'next-auth/jwt';
+import type { Session } from 'next-auth';
+import type { Account } from 'next-auth';
 
 const authOptions = {
   providers: [
@@ -17,14 +19,14 @@ const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, account }: any) {
+    async jwt({ token, account }: { token: JWT; account: Account | null }) {
       if (account) {
         token.accessToken = account.access_token;
         token.idToken = account.id_token;
         token.provider = account.provider;
 
         try {
-          const payload: any = jwtDecode(account.access_token);
+          const payload = jwtDecode<{ realm_access?: { roles?: string[] } }>(account.access_token!);
           token.roles = payload?.realm_access?.roles || [];
         } catch {
           token.roles = [];
@@ -32,9 +34,9 @@ const authOptions = {
       }
       return token;
     },
-    async session({ session, token }: any) {
-      session.accessToken = token.accessToken;
-      session.roles = token.roles || [];
+    async session({ session, token }: { session: Session; token: JWT }) {
+      (session as Session & { accessToken?: string; roles?: string[] }).accessToken = token.accessToken as string;
+      (session as Session & { accessToken?: string; roles?: string[] }).roles = token.roles as string[] || [];
       return session;
     },
   },
